@@ -35,4 +35,16 @@ class Market
     total_inventory
   end
 
+  def sort_item_list 
+    list = []
+
+    @vendors.map do |vendor|
+      vendor.inventory.each do |item, quantity|
+        list << item.name
+      end
+    end
+    
+    list.uniq.sort
+  end
+
 end
