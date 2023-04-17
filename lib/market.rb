@@ -35,7 +35,7 @@ class Market
     total_inventory
   end
 
-  def sort_item_list 
+  def sorted_item_list 
     list = []
 
     @vendors.map do |vendor|
