@@ -96,4 +96,25 @@ RSpec.describe Market do
     end
   end
 
+  describe "#sorted_item_list" do
+    it "can report an alphabetically sorted list of the names of all in-stock items (duplicates removed)" do
+      @market.add_vendor(@vendor1)
+      @market.add_vendor(@vendor2)
+      @market.add_vendor(@vendor3)
+      expect(@market.sorted_item_list).to eq([])
+      @vendor1.stock(@item1, 35)
+      expect(@market.sorted_item_list).to eq(["Peach"])
+      @vendor1.stock(@item2, 7)
+      expect(@market.sorted_item_list).to eq(["Peach", "Tomato"])
+      @vendor2.stock(@item4, 50)
+      expect(@market.sorted_item_list).to eq(["Banana Nice Cream", "Peach", "Tomato"])
+      @vendor3.stock(@item4, 50)
+      expect(@market.sorted_item_list).to eq(["Banana Nice Cream", "Peach", "Tomato"])
+      @vendor2.stock(@item3, 25)
+      expect(@market.sorted_item_list).to eq(["Banana Nice Cream", "Peach", "Peach-Raspberry Nice Cream", "Tomato"])
+      @vendor3.stock(@item1, 65)
+      expect(@market.sorted_item_list).to eq(["Banana Nice Cream", "Peach", "Peach-Raspberry Nice Cream", "Tomato"])
+    end
+  end
+
 end
