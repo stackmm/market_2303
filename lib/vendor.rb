@@ -6,4 +6,7 @@ class Vendor
     @inventory = Hash.new(0)
   end
 
+  def check_stock(item)
+    @inventory[:item]
+  end
 end
