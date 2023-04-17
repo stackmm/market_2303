@@ -38,13 +38,19 @@ class Market
   def sorted_item_list 
     list = []
 
-    @vendors.map do |vendor|
+    @vendors.each do |vendor|
       vendor.inventory.each do |item, quantity|
         list << item.name
       end
     end
     
     list.uniq.sort
+  end
+
+  def overstocked_items 
+    total_inventory.select do |item, hash|
+      hash[:quantity] > 50 && hash[:vendors].length > 1
+    end.keys
   end
 
 end
