@@ -24,4 +24,16 @@ RSpec.describe Market do
       expect(@market.vendors).to eq([])
     end
   end
+
+  describe "#add_vendor" do
+    it "can add a vendor" do
+      expect(@market.vendors).to eq([])
+      @market.add_vendor(@vendor1)
+      expect(@market.vendors).to eq([@vendor1])
+      @market.add_vendor(@vendor2)
+      expect(@market.vendors).to eq([@vendor1, @vendor2])
+      @market.add_vendor(@vendor3)
+      expect(@market.vendors).to eq([@vendor1, @vendor2, @vendor3])
+    end
+  end
 end
