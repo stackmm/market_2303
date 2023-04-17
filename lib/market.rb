@@ -21,5 +21,18 @@ class Market
       vendor.check_stock(item) > 0
     end
   end
-  
+
+  def total_inventory 
+    total_inventory = Hash.new { |hash, key| hash[key] = { quantity: 0, vendors: []}}
+
+    @vendors.each do |vendor|
+      vendor.inventory.each do |item, quantity|
+        total_inventory[item][:quantity] += quantity
+        total_inventory[item][:vendors] << vendor 
+      end
+    end
+
+    total_inventory
+  end
+
 end
