@@ -117,4 +117,25 @@ RSpec.describe Market do
     end
   end
 
+  describe "#overstocked_items" do
+    it "can list items that are overstocked (sold by > 1 vendor and has a total quantity > 50)" do 
+      @market.add_vendor(@vendor1)
+      @market.add_vendor(@vendor2)
+      @market.add_vendor(@vendor3)
+      @vendor1.stock(@item1, 35)
+      expect(@market.overstocked_items).to eq([])
+      @vendor3.stock(@item1, 10)
+      expect(@market.overstocked_items).to eq([])
+      @vendor3.stock(@item1, 10)
+      expect(@market.overstocked_items).to eq([@item1])
+      @vendor2.stock(@item4, 50)
+      @vendor2.stock(@item3, 25)
+      expect(@market.overstocked_items).to eq([@item1])
+      @vendor3.stock(@item4, 65)
+      expect(@market.overstocked_items).to eq([@item1, @item4])
+      @vendor3.stock(@item3, 65)
+      expect(@market.overstocked_items).to eq([@item1, @item4, @item3])
+    end
+  end
+
 end
